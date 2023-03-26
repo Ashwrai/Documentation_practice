@@ -22,8 +22,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: cd ./others/tools && npm i && npm run generate
+      - run: cd ./others/tools && npm i && npm run generate && npm run merge
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          file_pattern: 'documents/requeriments.pdf'
+          file_pattern: 'documents/*.pdf'
           commit_message: 'Regenerated PDF'

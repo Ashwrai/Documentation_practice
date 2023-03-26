@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "generate": "node requirements-to-pdf.js"
+    "generate": "node requirements-to-pdf.js",
+    "merge": "node merge.js"
   },
   "author": "",
   "license": "ISC",
