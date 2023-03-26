@@ -5,7 +5,7 @@ const PDFMerger = require('pdf-merger-js');
 const merger = new PDFMerger();
 
 //joining path of directory 
-const directoryPath = path.join(__dirname, '../requirements/');
+const directoryPath = path.join(__dirname, '../../requirements/');
 //passsing directoryPath and callback function
 fs.readdir(directoryPath, async (err, files) => {
     //handling error
@@ -28,7 +28,7 @@ fs.readdir(directoryPath, async (err, files) => {
         await merger.add(pdf.content)
     }
 
-    await merger.save('../documents/requeriments.pdf');
+    await merger.save('../../documents/requeriments.pdf');
 
 
 });
