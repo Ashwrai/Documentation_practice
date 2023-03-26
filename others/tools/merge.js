@@ -3,8 +3,8 @@ const merger = new PDFMerger();
 const fs = require('fs');
 
 const out_path = "../../documents/"
-const out_name = "Especificacions i Requeriments.pdf"
-const requeriments_file = "requeriments.pdf"
+const out_name = "especificaciones y requisitos.pdf"
+const requeriments_file = "requisitos.pdf"
 fs.readdir(out_path, async (err, files) => {
     //handling error
     if (err) {

@@ -28,7 +28,7 @@ fs.readdir(directoryPath, async (err, files) => {
         await merger.add(pdf.content)
     }
 
-    await merger.save('../../documents/requeriments.pdf');
+    await merger.save('../../documents/requisitos.pdf');
 
 
 });
