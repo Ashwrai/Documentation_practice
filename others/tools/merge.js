@@ -33,7 +33,7 @@ fs.readdir(in_path, async (err, files) => {
 
                 try {
                     const symlink_path = `${out_path}${sprint}-contents`
-                    fs.symlinkSync(`others/working-documents/${sprint}`, symlink_path, 'dir')
+                    fs.symlinkSync(`../others/working-documents/${sprint}`, symlink_path, 'dir')
                     console.log('created symlink', symlink_path)
                 } catch (error) {
                     console.log('symlink already exists')
