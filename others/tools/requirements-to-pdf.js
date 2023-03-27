@@ -1,8 +1,6 @@
 const path = require('path');
 const fs = require('fs');
 const { mdToPdf } = require('md-to-pdf');
-const PDFMerger = require('pdf-merger-js');
-const merger = new PDFMerger();
 
 
 function parseMD(content, f){
@@ -44,7 +42,10 @@ function parseMD(content, f){
         } else {
             for (const component in components) {
                 if(components[component].adding){
-                    components[component].content += line.trim()
+                    if(line.trim()){
+                        components[component].content += line.trim()
+                        if(component == 'relations') components[component].content += ','
+                    }
                     break;
                 }
             }
@@ -55,12 +56,17 @@ function parseMD(content, f){
     for (const component in components) {
         finalObj[component] = components[component].content
     }
+
+    finalObj.relations = finalObj.relations.slice(0, -1)
+    if(finalObj.relations && finalObj.relations.toLowerCase()!='pending'){
+        finalObj.relations = finalObj.relations.split(',').map(r=>`[${r}](#${r.split(' ').join('-').toUpperCase()})`).join(', ')
+    }
     finalObj.original = `[GitHub Reference](https://github.com/Ashwrai/ES23UAB-431-08/tree/main/requirements/${f})`
     return finalObj
 }
 
 function parsedMdToTable(md){
-    let content = `## ${md.id}\n`
+    let content = `<a name="${md.id.split(' ').join('-')}">\n\n ## ${md.id}</a>\n\n`
     content+="| property | value |\n"
     content+="|--|--|\n"
     for (const component in md) {
@@ -70,14 +76,23 @@ function parsedMdToTable(md){
 }
 
 function parsedMdToSimplifiedTable(requirements_parsed){
-    let content = "| requirement | type | title | description |\n"
-    content+="|--|--|--|--|\n"
-    for (const requirement of requirements_parsed) {
-        content+=`| [${requirement.id}](##${requirement.id.split(' ').join('-')}) | ${requirement.type} | ${requirement.title} | ${requirement.description} |\n`
+    let content = ""
+    for (let i = 0; i < requirements_parsed.length; i++) {
+        if(i==0||i%8==0){
+            if(i>0) {
+                content+=page_break
+            }
+            content+="| requirement | type | title | description |\n"
+            content+="|--|--|--|--|\n"
+        }
+        const requirement = requirements_parsed[i];
+        content+=`| [${requirement.id}](#${requirement.id.split(' ').join('-')}) | ${requirement.type} | ${requirement.title} | ${requirement.description} |\n`
     }
     return content
 }
 
+
+const page_break = '<div style="page-break-after: always;"></div>\n\n'
 //joining path of directory 
 const directoryPath = path.join(__dirname, '../../requirements/');
 //passsing directoryPath and callback function
@@ -107,29 +122,34 @@ fs.readdir(directoryPath, async (err, files) => {
         }
     }))
 
-    const pdfs = []
+    let content = ""
     for (const requirement_type in requirements) {
         if (Object.hasOwnProperty.call(requirements, requirement_type)) {
-            pdfs.push(await mdToPdf({
-                content: Buffer.from(parsedMdToSimplifiedTable(requirements[requirement_type]))
-            }))
+            content+='# ' + (requirement_type == 'rf' ? 'Functional Requirements' : 'Non-Functional Requirements') + '\n' + parsedMdToSimplifiedTable(requirements[requirement_type])+page_break
         }
     }
 
     for (const requirement_type in requirements) {
+        content+='# ' + (requirement_type == 'rf' ? 'Functional Requirements' : 'Non-Functional Requirements') + '\n'
         const category = requirements[requirement_type];
-        pdfs.push(...await Promise.all(category.map(async (requirement)=>{
-            return await mdToPdf({
-                content: Buffer.from(parsedMdToTable(requirement), 'utf8'),
-            })
-        })))
+        for (let i = 1; i <= category.length; i++) {
+            const element = category[i-1];
+            content+=parsedMdToTable(element)
+            if(i%2==0||i==category.length) {
+                content+=page_break
+            } else {
+                content+='\n'.repeat(3)
+            }
+        }
     }
-
-    for (const pdf of pdfs) {
-        await merger.add(pdf.content)
-    }
+    
+    const pdf = await mdToPdf({
+        content: Buffer.from(content, 'utf8'),
+    })
 
     const final_out = '../working-documents/requirements.pdf'
-    await merger.save(final_out);
+    fs.writeFileSync(final_out, pdf.content, {
+        encoding: 'utf8'
+    })
     console.log('exported', final_out)
 });
