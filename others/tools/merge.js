@@ -1,22 +1,36 @@
 const PDFMerger = require('pdf-merger-js');
-const merger = new PDFMerger();
+
 const fs = require('fs');
 
 const out_path = "../../documents/"
 const in_path = "../working-documents/"
-const out_name = "especificaciones y requisitos.pdf"
-const requeriments_file = "requisitos.pdf"
-fs.readdir(in_path, async (err, files) => {
+const requeriments_file = "requirements.pdf"
 
-    await Promise.all(files.map(async (f)=>{
-        if(fs.lstatSync(f).isDirectory()){
-            fs.readdir(`${in_path}${f}`, async (err, docs)=>{
-                if(!fs.lstatSync(f).isDirectory()){
-                    await merger.add(`${in_path}${f}/${docs}`)
-                }
-            })
-            await merger.add(`${in_path}${requeriments_file}`)
-            await merger.save(`${out_path}${f}`);
+if (!fs.existsSync(out_path)){
+    fs.mkdirSync(out_path);
+}
+
+fs.readdir(in_path, async (err, files) => {
+    await Promise.all(files.map(async (sprint)=>{
+        if(fs.lstatSync(`${in_path}${sprint}`).isDirectory()){
+
+            // read all sprints
+            fs.readdir(`${in_path}${sprint}`, async (err, docs) => {
+                // for every sprint, append all the documents
+                const merger = new PDFMerger();
+                await Promise.all(docs.map(async (doc)=>{
+                    if(!fs.lstatSync(`${in_path}${sprint}/${doc}`).isDirectory()){
+                        await merger.add(`${in_path}${sprint}/${doc}`)
+                    }
+                }))
+                // append the requirements file
+                await merger.add(`${in_path}${requeriments_file}`)
+
+                // export to /documents
+                const final_name = `${out_path}${sprint}.pdf`
+                await merger.save(`${out_path}${sprint}.pdf`);
+                console.log('exported', final_name)
+            });
         }
     }))
 });

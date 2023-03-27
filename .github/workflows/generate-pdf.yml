@@ -25,5 +25,5 @@ jobs:
       - run: cd ./others/tools && npm i && npm run generate && npm run merge
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          file_pattern: 'documents/*.pdf'
+          file_pattern: 'documents/*.pdf others/working-documents/requirements.pdf'
           commit_message: 'Regenerated PDF'

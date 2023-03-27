@@ -20,7 +20,7 @@ fs.readdir(directoryPath, async (err, files) => {
         const pdf = await mdToPdf({
             content: content + `\n\n[See on GitHub](https://github.com/Ashwrai/ES23UAB-431-08/blob/main/requirements/${f})`
         })
-        pdf.filename = `${f}.pdf`
+        console.log('converted', directoryPath+f)
         return pdf
     }))
 
@@ -28,7 +28,7 @@ fs.readdir(directoryPath, async (err, files) => {
         await merger.add(pdf.content)
     }
 
-    await merger.save('../working-documents/requisitos.pdf');
-
-
+    const final_out = '../working-documents/requirements.pdf'
+    await merger.save(final_out);
+    console.log('exported', final_out)
 });
