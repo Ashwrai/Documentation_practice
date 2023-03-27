@@ -1,6 +1,6 @@
 # ES23UAB-431-08
 ## Integrantes
-|Integrantes| Email | NIU | Rol | Username |
+|Integrantes| Email | NIU | Username | Rol |
 |--|--|--|--|--|
 | Bernal del Nozal, Jorge | jorge.bernal@uab.cat | - | - | Product Owner |
 | Huang, Daniel | daniel.huang@autonoma.cat | 1636837 | Ashwrai | Scrum Master
