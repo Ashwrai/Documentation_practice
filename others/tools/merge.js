@@ -30,6 +30,14 @@ fs.readdir(in_path, async (err, files) => {
                 const final_name = `${out_path}${sprint}.pdf`
                 await merger.save(`${out_path}${sprint}.pdf`);
                 console.log('exported', final_name)
+
+                try {
+                    const symlink_path = `${out_path}${sprint}-contents`
+                    fs.symlinkSync(`../others/working-documents/${sprint}`, symlink_path)
+                    console.log('created symlink', symlink_path)
+                } catch (error) {
+                    console.log('symlink already exists')
+                }
             });
         }
     }))
