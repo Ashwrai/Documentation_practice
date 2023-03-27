@@ -3,19 +3,20 @@ const merger = new PDFMerger();
 const fs = require('fs');
 
 const out_path = "../../documents/"
+const in_path = "../working-documents/"
 const out_name = "especificaciones y requisitos.pdf"
 const requeriments_file = "requisitos.pdf"
-fs.readdir(out_path, async (err, files) => {
-    //handling error
-    if (err) {
-        return console.log('Unable to scan directory: ' + err);
-    } 
-    //listing all files using forEach
+fs.readdir(in_path, async (err, files) => {
+
     await Promise.all(files.map(async (f)=>{
-        if(f!=requeriments_file && f!=out_name){
-            await merger.add(`${out_path}${f}`)
+        if(fs.lstatSync(f).isDirectory()){
+            fs.readdir(`${in_path}${f}`, async (err, docs)=>{
+                if(!fs.lstatSync(f).isDirectory()){
+                    await merger.add(`${in_path}${f}/${docs}`)
+                }
+            })
+            await merger.add(`${in_path}${requeriments_file}`)
+            await merger.save(`${out_path}${f}`);
         }
     }))
-    await merger.add(`${out_path}${requeriments_file}`)
-    await merger.save(`${out_path}${out_name}`);
 });
