@@ -2,6 +2,9 @@ const path = require('path');
 const fs = require('fs');
 const { mdToPdf } = require('md-to-pdf');
 
+const functional_title = "REQUISITOS FUNCIONALES"
+const non_function_title = "REQUISITOS NO FUNCIONALES"
+
 
 function parseMD(content, f){
     const components = {
@@ -67,7 +70,7 @@ function parseMD(content, f){
 
 function parsedMdToTable(md){
     let content = `<a name="${md.id.split(' ').join('-')}">\n\n ## ${md.id}</a>\n\n`
-    content+="| property | value |\n"
+    content+="| propiedad | valor |\n"
     content+="|--|--|\n"
     for (const component in md) {
         content+=`| ${component} | ${md[component]} |\n`
@@ -82,7 +85,7 @@ function parsedMdToSimplifiedTable(requirements_parsed){
             if(i>0) {
                 content+=page_break
             }
-            content+="| requirement | type | title | description |\n"
+            content+="| requisito | tipo | título | descripción |\n"
             content+="|--|--|--|--|\n"
         }
         const requirement = requirements_parsed[i];
@@ -125,12 +128,12 @@ fs.readdir(directoryPath, async (err, files) => {
     let content = ""
     for (const requirement_type in requirements) {
         if (Object.hasOwnProperty.call(requirements, requirement_type)) {
-            content+='# ' + (requirement_type == 'rf' ? 'Functional Requirements' : 'Non-Functional Requirements') + '\n' + parsedMdToSimplifiedTable(requirements[requirement_type])+page_break
+            content+='# ' + (requirement_type == 'rf' ? functional_title : non_function_title) + '\n' + parsedMdToSimplifiedTable(requirements[requirement_type])+page_break
         }
     }
 
     for (const requirement_type in requirements) {
-        content+='# ' + (requirement_type == 'rf' ? 'Functional Requirements' : 'Non-Functional Requirements') + '\n'
+        content+='# ' + (requirement_type == 'rf' ? functional_title : non_function_title) + '\n'
         const category = requirements[requirement_type];
         for (let i = 1; i <= category.length; i++) {
             const element = category[i-1];
@@ -146,7 +149,10 @@ fs.readdir(directoryPath, async (err, files) => {
     const pdf = await mdToPdf({
         content: Buffer.from(content, 'utf8'),
     }, {
-        css: 'table {width:100%!important;display:table}'
+        css: '@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Roboto&display=swap"); body {font-family: "Roboto", sans-serif !important;} table {width:100%!important;display:table} h1, h2, h3, h4, h5, h6 {font-family: "JetBrains Mono", monospace !important}',
+        pdf_options: {
+            margin: '20mm 20mm'
+        },
     })
 
     const final_out = '../working-documents/requirements.pdf'
