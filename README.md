@@ -6,7 +6,7 @@
 | Huang, Daniel | daniel.huang@autonoma.cat | 1636837 | Ashwrai | Scrum Master
 | Hammouch Benabdellah, Sara | sara.hammouch@autonoma.cat | 1638922 | hsara03 | Scrum Member |
 | Osuna Garcia, Enrique | enrique.osuna@autonoma.cat | 1636461 | quiquelhappy | Scrum Member |
-| Gusart Verdú, Guillem | gusart.verdu@autonoma.cat | 1636054 | willy-jpg-png | Scrum Member |
+| Gusart Verdú, Guillem | guillem.gusart@autonoma.cat | 1636054 | willy-jpg-png | Scrum Member |
 
 ## Enlaces
 - [Azure DevOps](https://dev.azure.com/UAB-EngSw-2023-431-08/)
