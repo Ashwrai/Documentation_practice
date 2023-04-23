@@ -128,6 +128,9 @@ fs.readdir(directoryPath, async (err, files) => {
     let content = ""
     for (const requirement_type in requirements) {
         if (Object.hasOwnProperty.call(requirements, requirement_type)) {
+            for (const requirement of requirements[requirement_type]) {
+                console.log(`${requirement.id}: ${requirement.title}`)
+            }
             content+='# ' + (requirement_type == 'rf' ? functional_title : non_function_title) + '\n' + parsedMdToSimplifiedTable(requirements[requirement_type])+page_break
         }
     }
