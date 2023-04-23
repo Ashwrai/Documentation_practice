@@ -1,4 +1,4 @@
-const PDFMerger = require('pdf-merger-js');
+merconst PDFMerger = require('pdf-merger-js');
 
 const fs = require('fs');
 
