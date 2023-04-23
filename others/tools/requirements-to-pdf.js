@@ -78,7 +78,7 @@ function parsedMdToTable(md){
 function parsedMdToSimplifiedTable(requirements_parsed){
     let content = ""
     for (let i = 0; i < requirements_parsed.length; i++) {
-        if(i==0||i%8==0){
+        if(i==0||i%7==0){
             if(i>0) {
                 content+=page_break
             }
@@ -145,6 +145,8 @@ fs.readdir(directoryPath, async (err, files) => {
     
     const pdf = await mdToPdf({
         content: Buffer.from(content, 'utf8'),
+    }, {
+        css: 'table {width:100%!important;display:table}'
     })
 
     const final_out = '../working-documents/requirements.pdf'
