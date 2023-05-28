@@ -1,0 +1,44 @@
+@startuml
+actor Cliente
+boundary "Interfaz Cliente"
+actor "Atención al cliente"
+boundary "Interfaz Atención al cliente"
+control "Gestor Reclamaciones"
+actor "Compañía de seguros"
+
+Cliente -> "Interfaz Cliente": ComunicarReclamación(detalles)
+"Interfaz Cliente" -> "Interfaz Atención al cliente": R=NotificarReclamación(detalles)
+"Interfaz Atención al cliente" -> "Atención al cliente": ComunicarReclamación(R)
+"Atención al cliente" -> "Interfaz Atención al cliente": RegistrarReclamación(R)
+"Interfaz Atención al cliente" -> "Gestor Reclamaciones": RegistrarReclamación(R)
+"Gestor Reclamaciones" -> "Compañía de seguros": ValidarReclamación(R)
+
+"Compañía de seguros" --> "Gestor Reclamaciones": ResultadoValidación
+
+alt Reclamación válida
+    "Gestor Reclamaciones" -> "Compañía de seguros": numReclamación = GenerarNúmeroReclamación()
+    "Gestor Reclamaciones" --> "Interfaz Cliente": MostrarInformaciónProcesoReclamación(numReclamación)
+    alt Presentar documentacio Adicional
+
+        Cliente -> "Interfaz Cliente": PresentarDocumentaciónAdicional()
+        "Interfaz Cliente" -> "Gestor Reclamaciones": PresentarDocumentaciónAdicional()
+        "Gestor Reclamaciones" -> "Compañía de seguros": PresentarDocumentaciónAdicional()
+        end Presentar documentacio Adicional
+
+        "Gestor Reclamaciones" -> "Compañía de seguros": RevisarReclamación()
+        "Compañía de seguros" --> "Gestor Reclamaciones": res = EnviarResultadoReclamación()
+        "Gestor Reclamaciones" --> "Interfaz Cliente": MostrarResultadoReclamación(res)
+
+        alt Reclamación aceptada
+            "Compañía de seguros" -> "Gestor Reclamaciones": RealizarPagoOCompensación()
+        else Reclamación rechazada
+            "Compañía de seguros" --> "Gestor Reclamaciones": ex = EnviarExplicaciónRechazo()
+            "Gestor Reclamaciones" --> "Interfaz Cliente": MostrarExplicaciónRechazo(ex)
+        end
+
+    else Reclamación inválida
+        "Compañía de seguros" --> "Gestor Reclamaciones": EnviarExplicaciónInvalida()
+        "Gestor Reclamaciones" --> "Interfaz Cliente": MostrarExplicaciónInvalida(explicación)
+    end
+
+@enduml

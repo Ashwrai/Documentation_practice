@@ -1,0 +1,21 @@
+@startuml realizar pago de comandaactor Cliente
+actor "Cliente"
+boundary "Interfaz pago"
+control "Gestor de pago"
+actor "Entidad bancaria"
+"Cliente" -> "Gestor de pago": Solicitar intención de pago
+"Gestor de pago" -> "Interfaz pago": Obtener métodos de pago viables
+"Cliente" -> "Interfaz pago": Seleccionar Entidad bancaria
+"Interfaz pago" -> "Gestor de pago": Solicitar Entidad bancaria
+"Gestor de pago" -> "Entidad bancaria": Preparar formulario pago
+"Entidad bancaria" -> "Gestor de pago": Almacenar solicitud pago
+"Gestor de pago" -> "Interfaz pago": Construir interfaz pago
+"Cliente" -> "Interfaz pago": Enviar formulario completo de pago
+"Interfaz pago" -> "Entidad bancaria": Validar datos de pago
+alt Pago correcto
+    "Entidad bancaria" -> "Gestor de pago": Validar pedido
+    "Gestor de pago" -> "Interfaz pago": Enviar datos de la transferencia
+else Error de pago
+    "Entidad bancaria" -> "Interfaz pago": Devolver estado de error
+end
+@enduml

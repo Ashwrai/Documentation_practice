@@ -1,0 +1,22 @@
+@startuml
+actor "Propietario de Tienda"
+boundary "Interfaz Pagos"
+control "Gestor de Pagos"
+actor Cliente
+control "Gestor de Pedidos"
+entity Pedido
+
+"Propietario de Tienda" -> "Interfaz Pagos": Generar_factura()
+ref over "Propietario de Tienda": CU Escojer método de pago
+"Propietario de Tienda" -> "Interfaz Pagos": Adjuntar_detalles()
+"Interfaz Pagos" -> "Gestor de Pagos": Notificar_pago()
+"Gestor de Pagos" -> Cliente: Notificar_pago()
+ref over Cliente: CU Realizar el pago de la comanda
+Cliente --> "Gestor de Pagos": <<return>>
+"Gestor de Pagos" -> "Interfaz Pagos": Notificar_confirmación()
+"Interfaz Pagos" -> "Gestor de Pedidos": Pago_confirmado()
+"Gestor de Pedidos" -> Pedido: Actualizar_estado()
+Pedido --> "Gestor de Pedidos": <<return>>
+"Gestor de Pedidos" --> "Interfaz Pagos": <<return>>
+"Interfaz Pagos" --> "Propietario de Tienda": <<return>>
+@enduml
