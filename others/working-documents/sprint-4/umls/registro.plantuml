@@ -1,4 +1,4 @@
-@startuml
+@startuml Registro
 actor Visitante
 boundary "Interfaz Registro"
 control "Gestor de Cuentas"
