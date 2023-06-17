@@ -1,0 +1,21 @@
+@startuml
+actor Usuario
+
+boundary "Interfaz de la Cuenta"
+control "Gestor de la Cuenta"
+database "Base de Datos de la Cuenta"
+
+Usuario -> "Interfaz de la Cuenta": VerDetallesCuenta()
+"Interfaz de la Cuenta" -> "Gestor de la Cuenta": ObtenerDetallesCuenta()
+"Gestor de la Cuenta" -> "Base de Datos de la Cuenta": ConsultarDetallesCuenta()
+"Base de Datos de la Cuenta" --> "Gestor de la Cuenta": DetallesCuenta
+"Gestor de la Cuenta" -> "Interfaz de la Cuenta": MostrarDetallesCuenta(DetallesCuenta)
+Usuario -> "Interfaz de la Cuenta": SeleccionarOpcionEliminarDetalles()
+"Interfaz de la Cuenta" -> "Gestor de la Cuenta": ObtenerDetallesEliminar()
+"Gestor de la Cuenta" -> "Interfaz de la Cuenta": MostrarDetallesEliminar(DetallesEliminar)
+Usuario -> "Interfaz de la Cuenta": SeleccionarDetallesEliminar(DetallesEliminar)
+"Interfaz de la Cuenta" -> "Gestor de la Cuenta": ConfirmarEliminacionDetalles(DetallesEliminar)
+"Gestor de la Cuenta" -> "Base de Datos de la Cuenta": EliminarDetalles(DetallesEliminar)
+"Gestor de la Cuenta" -> "Interfaz de la Cuenta": ConfirmarEliminacion()
+
+@enduml

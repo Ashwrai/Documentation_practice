@@ -1,0 +1,22 @@
+@startuml
+actor SistemaDeGPS
+
+boundary "Interfaz del Cliente"
+boundary "Interfaz del Transportista"
+boundary "Interfaz del Mapa"
+control "Gestor del Mapa"
+
+SistemaDeGPS -> "Interfaz del Cliente": VerEstadoPedido()
+"Interfaz del Cliente" -> "Interfaz del Mapa": MostrarMapa()
+"Interfaz del Mapa" -> "Gestor del Mapa": ObtenerLocalizacionActual(transportista)
+"Gestor del Mapa" -> "Interfaz del Mapa": ObtenerUbicacionActual(transportista)
+"Interfaz del Mapa" --> "Interfaz del Cliente": UbicacionActual
+"Interfaz del Mapa" -> "Gestor del Mapa": ObtenerUbicacionDestino(pedido)
+"Gestor del Mapa" --> "Interfaz del Mapa": UbicacionDestino
+"Interfaz del Mapa" --> "Interfaz del Cliente": UbicacionDestino
+SistemaDeGPS -> "Interfaz del Transportista": EnviarLocalizacionActual()
+"Interfaz del Transportista" -> "Interfaz del Mapa": ObtenerUbicacionActual(transportista)
+"Interfaz del Mapa" --> "Interfaz del Transportista": UbicacionActual
+SistemaDeGPS -> "Interfaz del Mapa": ActualizarMapa()
+
+@enduml
