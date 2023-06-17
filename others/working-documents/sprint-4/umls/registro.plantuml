@@ -1,0 +1,26 @@
+@startuml Registro
+actor Visitante
+boundary "Interfaz Registro"
+control "Gestor de Cuentas"
+actor "Autenticación Externa"
+
+Visitante -> "Interfaz Registro": Seleccionar_Tipo_Cuenta()
+"Interfaz Registro" -> "Interfaz Registro": Mostrar_Campos_Necesarios()
+Visitante -> "Interfaz Registro": Pulsar_Registrarse()
+"Interfaz Registro" -> "Gestor de Cuentas": Solicitar_Registro()
+"Gestor de Cuentas" -> "Gestor de Cuentas": Comprobar_Campos()
+alt Datos Correctos
+    alt Registro Terceros
+        "Gestor de Cuentas" -> "Autenticación Externa": Registro_Terceros()
+        "Autenticación Externa" --> "Gestor de Cuentas": Recibir_Datos_Terceros()
+    end
+    "Gestor de Cuentas" -> "Gestor de Cuentas": Crear_Cuenta()
+    alt Error Registro
+        "Gestor de Cuentas" --> "Interfaz Registro": Mostrar_Error_Registro()
+    else Registro Correcto
+        "Gestor de Cuentas" --> "Interfaz Registro": Mostrar_Datos_Registro()
+    end
+else Datos Incorrectos
+    "Gestor de Cuentas" --> "Interfaz Registro": Resaltar_Campos_Erroneos()
+end
+@enduml

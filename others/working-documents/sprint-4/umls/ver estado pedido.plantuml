@@ -1,0 +1,29 @@
+/'
+Seleccionar la opción de ver estado del pedido
+Obtener los datos actuales del pedido
+Mostrar estado del pedido
+Actualizar a tiempo real la ubicación del pedido
+'/
+@startuml Ver estado pedido
+actor "Cliente/Propietario"
+boundary "Interfaz Estado Pedido"
+control "Gestor Pedidos"
+
+par
+    loop Entregando!=null
+        "Aplicación Transportista" -> "Gestor Pedidos": Actualizar_Posición_GPS()
+        "Aplicación Transportista" -> "Aplicación Transportista": Esperar_Un_Segundo()
+    end
+    else
+    "Cliente/Propietario"->"Interfaz Estado Pedido": Ver_Estado_Pedido()
+    loop Error==false && Finalizado==false
+        "Interfaz Estado Pedido" -> "Gestor Pedidos": Solicitar_Estado_Actual()
+        alt Solicitud Válida
+            "Gestor Pedidos" --> "Interfaz Estado Pedido": Actualizar_Estado_Pedido()
+            "Interfaz Estado Pedido" -> "Interfaz Estado Pedido": Esperar_Un_Segundo()
+        else Solicitud Invalida
+            "Gestor Pedidos" --> "Interfaz Estado Pedido": Mostrar_Error()
+        end
+    end
+end
+@enduml

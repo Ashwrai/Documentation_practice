@@ -1,4 +1,4 @@
-@startuml
+@startuml Hacer Reclamación
 actor Cliente
 boundary "Interfaz Cliente"
 actor "Atención al cliente"

@@ -1,0 +1,33 @@
+@startuml Validar Sesión
+/'
+Este caso de uso describe el proceso de validación de sesión por parte del actor de autenticación externa cuando un usuario intenta iniciar sesión en el sistema.
+Autenticación externa
+* El usuario debe estar registrado
+
+1. El actor de autenticación externa recibe la solicitud de inicio de sesión de un usuario.
+2. El actor verifica las credenciales proporcionadas por el usuario, como el nombre de usuario y la contraseña.
+3. El actor realiza una validación de las credenciales, verificando que coincidan con los datos almacenados en el sistema.
+4. Si las credenciales son válidas, el actor marca la sesión como autenticada y permite el acceso al sistema.
+
+--
+
+1. Si las credenciales no son válidas, el actor marca la sesión como no autenticada y muestra un mensaje de error al usuario.
+2. Se pide que introduzca el nombre de usuario y la contraseña correcta.
+'/
+
+actor Usuario
+boundary "Vista Global Aplicación"
+control "Gestor de Cuentas"
+
+Usuario -> "Vista Global Aplicación": Solicitar_Vista()
+alt Necesita Renovar Sesión
+    "Vista Global Aplicación" -> "Gestor de Cuentas": Renovar_Sesión()
+    alt Renovación Correcta
+        "Gestor de Cuentas"-->"Vista Global Aplicación": Devolver_Sesión_Validada()
+    else Error Renovación
+        "Gestor de Cuentas" --> "Vista Global Aplicación": Devolver_Error()
+        "Vista Global Aplicación"->"Vista Global Aplicación": Eliminar_Sesión()
+        "Vista Global Aplicación"->"Vista Global Aplicación": Mostrar_Login()
+    end
+end
+@enduml
