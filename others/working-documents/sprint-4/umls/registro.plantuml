@@ -2,7 +2,7 @@
 actor Visitante
 boundary "Interfaz Registro"
 control "Gestor de Cuentas"
-actor "Autentificación de Terceros"
+actor "Autenticación Externa"
 
 Visitante -> "Interfaz Registro": Seleccionar_Tipo_Cuenta()
 "Interfaz Registro" -> "Interfaz Registro": Mostrar_Campos_Necesarios()
@@ -11,8 +11,8 @@ Visitante -> "Interfaz Registro": Pulsar_Registrarse()
 "Gestor de Cuentas" -> "Gestor de Cuentas": Comprobar_Campos()
 alt Datos Correctos
     alt Registro Terceros
-        "Gestor de Cuentas" -> "Autentificación de Terceros": Registro_Terceros()
-        "Autentificación de Terceros" --> "Gestor de Cuentas": Recibir_Datos_Terceros()
+        "Gestor de Cuentas" -> "Autenticación Externa": Registro_Terceros()
+        "Autenticación Externa" --> "Gestor de Cuentas": Recibir_Datos_Terceros()
     end
     "Gestor de Cuentas" -> "Gestor de Cuentas": Crear_Cuenta()
     alt Error Registro
