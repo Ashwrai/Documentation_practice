@@ -17,8 +17,9 @@ alt Datos Correctos
     "Gestor de Cuentas" -> "Gestor de Cuentas": Crear_Cuenta()
     alt Error Registro
         "Gestor de Cuentas" --> "Interfaz Registro": Mostrar_Error_Registro()
+    else Registro Correcto
+        "Gestor de Cuentas" --> "Interfaz Registro": Mostrar_Datos_Registro()
     end
-    "Gestor de Cuentas" --> "Interfaz Registro": Mostrar_Datos_Registro()
 else Datos Incorrectos
     "Gestor de Cuentas" --> "Interfaz Registro": Resaltar_Campos_Erroneos()
 end
