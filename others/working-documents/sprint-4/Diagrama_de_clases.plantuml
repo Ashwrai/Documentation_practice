@@ -1,0 +1,226 @@
+@startuml
+class DatosUsuario <<entity>> 
+{
+{field} -Usuario
+{field} -Contraseña
+{field} -Correo_electrónico
+{field} -Teléfono
+{field} -Ubicación
+{method} +Registrarse()
+{method} +Iniciar_Sesión()
+{method} +Modificar_Datos()
+{method} +Eliminar_Datos()
+}
+
+
+class DatosPropietarioTienda <<entity>>
+{
+{field} -Productos
+{method} +Escojer_Modo_Pago()
+{method} +Hacer_Reclamación()
+{method} +Escojer_Transporte()
+{method} +Añadir_Producto()
+{method} +Hacer_Reclamación()
+}
+
+class DatosTransportista <<entity>>
+{
+{field} -Vehículo
+{method} +Kilometraje()
+{method} +Get_Ubicación()
+}
+
+class DatosCliente <<entity>>
+{
+{method} +Hacer_Pedido()
+{method} +Hacer_Reclamación()
+}
+
+class Tíquet <<entity>>
+{
+{field} -ID_Tiquet
+{method} +Supervisar_Reclamación()
+{method} +Generar_Tíquet()
+}
+
+class GestorPagos <<control>>
+{
+{method} +Realizar_Transferencia()
+}
+
+interface InterfazPagos <<boundary>>
+{
+{method} +Insertar_Datos()
+}
+
+class Producto <<entity>>
+{
+{field} -Nombre
+{field} -Precio
+{field} -Información
+{method} +get_Datos()
+}
+
+class Oferta <<entity>>
+{
+{field} -Productos
+{field} -Cantidad
+{field} -Precio
+}
+
+class GestorPedido <<control>>
+{
+{method} +Actualizar_Estado()
+}
+
+interface InterfazPedido <<boundary>>
+{
+{method} +Ver_Estado()
+{method} +Obtener_Ubicación()
+}
+
+class GestorOfertas <<control>>
+{
+{method} +Generar_Pedido()
+{method} +Mostrar_Anuncios()
+{method} +Mostrar_Ofertas()
+}
+
+interface InterfazOfertas <<boundary>>
+{
+{method} +Mostrar_Ofertas()
+{method} +Mostrar_Anuncios()
+}
+
+class GestorMapa <<control>>
+{
+{method} +Calcular_Camino()
+}
+
+interface InterfazMapa <<boundary>>
+{
+{method} +Mostrar_Mapa()
+{method} +Actualizar_Ubicación()
+}
+
+class GestorReclamaciones <<control>>
+{
+{method} +Registrar_Reclamación()
+}
+
+interface InterfazReclamaciones <<boundary>>
+{
+{method} +Mostrar_Reclamación()
+}
+
+class GestorUsuario <<control>>
+{
+{method} +Iniciar_Sesión()
+{method} +Registrarse()
+{method} +Eliminar_Datos()
+{method} +Modificar_Datos()
+}
+
+interface InterfazUsuario <<boundary>>
+{
+{method} +Iniciar_Sesión()
+{method} +Registrarse()
+{method} +Eliminar_Datos()
+{method} +Modificar_Datos()
+}
+
+class GestorCliente <<control>>
+{
+{method} +Hacer_Reclamación()
+}
+
+interface InterfazCliente <<boundary>>
+{
+{method} +Hacer_Reclamación()
+}
+
+class GestorTransportista <<control>>
+{
+{method} +Aceptar_pedido()
+{method} +Terminar_pedido()
+}
+
+interface InterfazTransportista <<boundary>>
+{
+{method} +Aceptar_pedido()
+{method} +Terminar_pedido()
+}
+
+class GestorPropietarioTiendo <<control>>
+{
+{method} +Añadir_Producto()
+}
+
+interface InterfazPropietarioTiendo <<boundary>>
+{
+{method} +Añadir_Producto()
+}
+
+class Pago <<entity>>
+{
+{field} -ID_Pago
+{field} -Cantidad
+{field} -Comisión
+}
+
+class Pedido <<entity>>
+{
+{field} -ID_Pedido
+{field} -Precio
+{field} -Productos
+{field} -Estado
+}
+
+class Ruta <<entity>>
+{
+{field} -Origen
+{field} -Destino
+}
+
+class Envio <<entity>>
+{
+{field} -Estado
+}
+
+class Publicidad <<entity>>
+{
+{field} -Datos
+}
+
+DatosUsuario ^-- DatosCliente
+DatosUsuario ^-- DatosPropietarioTienda
+DatosUsuario ^-- DatosTransportista
+Pedido -- Pago
+DatosCliente "1" -- "1..100" Pedido
+DatosPropietarioTienda -- Pedido
+Pedido o-- "1..*" Oferta
+Pedido *-- Envio
+DatosTransportista "1" -- "n" Envio
+Envio o-- Ruta
+Ruta -- GestorMapa
+GestorMapa -- InterfazMapa
+Pago -- GestorPagos
+GestorPagos -- InterfazPagos
+Pedido -- GestorPedido
+GestorPedido -- InterfazPedido
+Oferta --GestorOfertas
+GestorOfertas -- InterfazOfertas
+Oferta o-- "1..*" Producto
+Tíquet "1" -- "1" Pedido
+Tíquet -- GestorReclamaciones
+GestorReclamaciones -- InterfazReclamaciones
+Publicidad -- GestorOfertas
+DatosUsuario -- GestorUsuario
+GestorUsuario -- InterfazUsuario
+DatosCliente -- GestorCliente
+GestorCliente -- InterfazCliente
+DatosTransportista -- GestorTransportista
+GestorTransportista -- InterfazTransportista
+DatosPropietarioTienda -- GestorPropietarioTiendo
+GestorPropietarioTiendo -- InterfazPropietarioTiendo
+@enduml
