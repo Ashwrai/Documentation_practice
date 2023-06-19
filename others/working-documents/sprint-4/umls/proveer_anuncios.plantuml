@@ -3,12 +3,12 @@
 actor "Proveedor de anuncios"
 boundary "Interfaz Ofertas"
 control "Gestor Ofertas"
-boundary "Interfaz Cliente"
+entity DatosCliente
 
 "Proveedor de anuncios" -> "Interfaz Ofertas": Generar_anuncios()
 "Interfaz Ofertas" -> "Gestor Ofertas": Obtener_datos()
-"Gestor Ofertas" -> "Interfaz Cliente": Obtener_datos()
-"Interfaz Cliente" --> "Gestor Ofertas": <<return>>
+"Gestor Ofertas" -> DatosCliente: Obtener_datos()
+DatosCliente --> "Gestor Ofertas": <<return>>
 "Gestor Ofertas" -> "Interfaz Ofertas": Mostrar_anuncios()
 
 @enduml

@@ -3,19 +3,19 @@ actor Usuario
 
 boundary "Interfaz del Usuario"
 control "Gestor del Usuario"
-database "Base de Datos del Usuario"
+entity "DatosUsuario"
 
 Usuario -> "Interfaz del Usuario": VerDetal Usuario()
-"Interfaz del Usuario" -> "Gestor del Usuario": ObtenerDetal Usuario()
-"Gestor del Usuario" -> "Base de Datos del Usuario": ConsultarDetal Usuario()
-"Base de Datos del Usuario" --> "Gestor del Usuario": Detal Usuario
-"Gestor del Usuario" -> "Interfaz del Usuario": MostrarDetal Usuario(Detal Usuario)
+"Interfaz del Usuario" -> "Gestor del Usuario": ObtenerDetalleUsuario()
+"Gestor del Usuario" -> "DatosUsuario": ConsultarDetalleUsuario()
+"DatosUsuario" --> "Gestor del Usuario": DetalleUsuario
+"Gestor del Usuario" -> "Interfaz del Usuario": MostrarDetalleUsuario(Detal Usuario)
 Usuario -> "Interfaz del Usuario": SeleccionarOpcionEliminarDetalles()
 "Interfaz del Usuario" -> "Gestor del Usuario": ObtenerDetallesEliminar()
 "Gestor del Usuario" -> "Interfaz del Usuario": MostrarDetallesEliminar(DetallesEliminar)
 Usuario -> "Interfaz del Usuario": SeleccionarDetallesEliminar(DetallesEliminar)
 "Interfaz del Usuario" -> "Gestor del Usuario": ConfirmarEliminacionDetalles(DetallesEliminar)
-"Gestor del Usuario" -> "Base de Datos del Usuario": EliminarDetalles(DetallesEliminar)
+"Gestor del Usuario" -> "DatosUsuario": EliminarDetalles(DetallesEliminar)
 "Gestor del Usuario" -> "Interfaz del Usuario": ConfirmarEliminacion()
 
 @enduml

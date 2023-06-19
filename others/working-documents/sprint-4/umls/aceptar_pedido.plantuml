@@ -3,31 +3,32 @@ actor Propietario
 
 boundary "Interfaz de Pedidos"
 control "Gestor de Pedidos"
-entity "Base de Datos de Pedidos"
+entity Pedido
 
-Propietario -> "Interfaz de Pedidos": SeleccionarPedidosRecibidos()
+Propietario -> "Interfaz de Pedidos": ObtenerPedidosRecibidos()
 "Interfaz de Pedidos" -> "Gestor de Pedidos": ObtenerPedidosRecibidos()
-"Gestor de Pedidos" -> "Base de Datos de Pedidos": ConsultarPedidosRecibidos()
-"Base de Datos de Pedidos" --> "Gestor de Pedidos": PedidosRecibidos
+loop fin
+"Gestor de Pedidos" -> Pedido: ObtenerPedidosRecibidos()
+Pedido --> "Gestor de Pedidos": Pedido
+end
 "Gestor de Pedidos" -> "Interfaz de Pedidos": MostrarPedidosRecibidos(PedidosRecibidos)
-Propietario -> "Interfaz de Pedidos": SeleccionarPedido(pedido)
-"Interfaz de Pedidos" -> "Gestor de Pedidos": ObtenerDetallePedido(pedido)
-"Gestor de Pedidos" -> "Base de Datos de Pedidos": ConsultarDetallePedido(pedido)
-"Base de Datos de Pedidos" --> "Gestor de Pedidos": DetallePedido
+Propietario -> "Interfaz de Pedidos": SeleccionarPedido(y)
+"Interfaz de Pedidos" -> "Gestor de Pedidos": ObtenerDetallePedido(y)
+"Gestor de Pedidos" -> Pedido: ConsultarDetallePedido(y)
+Pedido --> "Gestor de Pedidos": DetallePedido
 "Gestor de Pedidos" -> "Interfaz de Pedidos": MostrarDetallePedido(DetallePedido)
-Propietario -> "Interfaz de Pedidos": AceptarPedido(pedido)
+Propietario -> "Interfaz de Pedidos": AceptarPedido(y)
 "Interfaz de Pedidos" -> "Gestor de Pedidos": ActualizarEstadoPedido(pedido, aceptado)
-"Gestor de Pedidos" -> "Base de Datos de Pedidos": ActualizarEstadoPedido(pedido, aceptado)
+"Gestor de Pedidos" -> Pedido: ActualizarEstadoPedido(y, aceptado)
 "Gestor de Pedidos" -> "Interfaz de Pedidos": ConfirmarAceptacionPedido()
 
 alt Propietario puede realizar el pedido
-    "Interfaz de Pedidos" -> "Gestor de Pedidos": VerificarDisponibilidad(pedido)
-    "Gestor de Pedidos" -> "Base de Datos de Pedidos": ConsultarDisponibilidad(pedido)
-    "Base de Datos de Pedidos" --> "Gestor de Pedidos": Disponibilidad
+    "Interfaz de Pedidos" -> "Gestor de Pedidos": VerificarDisponibilidad(y)
+    "Gestor de Pedidos" -> Pedido: ConsultarDisponibilidad(y)
+    Pedido --> "Gestor de Pedidos": Disponibilidad
 else Propietario no puede realizar el pedido
-    "Interfaz de Pedidos" -> "Base de Datos de Pedidos": Devolucion()
+    "Interfaz de Pedidos" -> Pedido: Devolucion()
  
-    "Base de Datos de Pedidos" --> "Interfaz de Pedidos": return
+    Pedido --> "Interfaz de Pedidos": return
 end
-
 @enduml
