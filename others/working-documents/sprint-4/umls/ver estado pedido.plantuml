@@ -11,10 +11,7 @@ boundary "Interfaz Ruta"
 control "Gestor Pedidos"
 
 par transportista
-    loop Entregando!=null
-        "Interfaz Ruta" -> "Gestor Pedidos": Actualizar_Posición_GPS()
-        "Interfaz Ruta" -> "Interfaz Ruta": Esperar_Un_Segundo()
-    end
+    ref over "Proporcionar Localización": Actualizar_GPS()
     else cliente
     "Cliente/Propietario"->"Interfaz Pedido": Ver_Estado_Pedido()
     loop Error==false && Finalizado==false
