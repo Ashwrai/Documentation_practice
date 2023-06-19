@@ -1,0 +1,20 @@
+@startuml
+
+actor Transportista
+boundary "Interfaz Transportista"
+control "Gestor Transportista"
+database "Base de datos de pedidos"
+entity Pedido
+
+Transportista -> "Interfaz Transportista": Aceptar_pedidos()
+"Interfaz Transportista" -> "Gestor Transportista": Mostrar_pedidos()
+"Gestor Transportista" -> "Base de datos de pedidos": Mostrar_pedidos()
+"Base de datos de pedidos" --> "Gestor Transportista": <<return>>
+"Gestor Transportista" --> "Interfaz Transportista": <<return>>
+Transportista -> "Interfaz Transportista": Seleccionar_pedido()
+"Interfaz Transportista" -> "Gestor Transportista": Actualizar_estado()
+"Gestor Transportista" -> Pedido: Actualizar_estado()
+Pedido --> "Gestor Transportista": <<return>>
+"Gestor Transportista" --> "Interfaz Transportista": <<return>>
+
+@enduml
