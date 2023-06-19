@@ -1,21 +1,21 @@
 @startuml
 actor Usuario
 
-boundary "Interfaz de la Cuenta"
-control "Gestor de la Cuenta"
-database "Base de Datos de la Cuenta"
+boundary "Interfaz del Usuario"
+control "Gestor del Usuario"
+database "Base de Datos del Usuario"
 
-Usuario -> "Interfaz de la Cuenta": VerDetallesCuenta()
-"Interfaz de la Cuenta" -> "Gestor de la Cuenta": ObtenerDetallesCuenta()
-"Gestor de la Cuenta" -> "Base de Datos de la Cuenta": ConsultarDetallesCuenta()
-"Base de Datos de la Cuenta" --> "Gestor de la Cuenta": DetallesCuenta
-"Gestor de la Cuenta" -> "Interfaz de la Cuenta": MostrarDetallesCuenta(DetallesCuenta)
-Usuario -> "Interfaz de la Cuenta": SeleccionarOpcionEliminarDetalles()
-"Interfaz de la Cuenta" -> "Gestor de la Cuenta": ObtenerDetallesEliminar()
-"Gestor de la Cuenta" -> "Interfaz de la Cuenta": MostrarDetallesEliminar(DetallesEliminar)
-Usuario -> "Interfaz de la Cuenta": SeleccionarDetallesEliminar(DetallesEliminar)
-"Interfaz de la Cuenta" -> "Gestor de la Cuenta": ConfirmarEliminacionDetalles(DetallesEliminar)
-"Gestor de la Cuenta" -> "Base de Datos de la Cuenta": EliminarDetalles(DetallesEliminar)
-"Gestor de la Cuenta" -> "Interfaz de la Cuenta": ConfirmarEliminacion()
+Usuario -> "Interfaz del Usuario": VerDetal Usuario()
+"Interfaz del Usuario" -> "Gestor del Usuario": ObtenerDetal Usuario()
+"Gestor del Usuario" -> "Base de Datos del Usuario": ConsultarDetal Usuario()
+"Base de Datos del Usuario" --> "Gestor del Usuario": Detal Usuario
+"Gestor del Usuario" -> "Interfaz del Usuario": MostrarDetal Usuario(Detal Usuario)
+Usuario -> "Interfaz del Usuario": SeleccionarOpcionEliminarDetalles()
+"Interfaz del Usuario" -> "Gestor del Usuario": ObtenerDetallesEliminar()
+"Gestor del Usuario" -> "Interfaz del Usuario": MostrarDetallesEliminar(DetallesEliminar)
+Usuario -> "Interfaz del Usuario": SeleccionarDetallesEliminar(DetallesEliminar)
+"Interfaz del Usuario" -> "Gestor del Usuario": ConfirmarEliminacionDetalles(DetallesEliminar)
+"Gestor del Usuario" -> "Base de Datos del Usuario": EliminarDetalles(DetallesEliminar)
+"Gestor del Usuario" -> "Interfaz del Usuario": ConfirmarEliminacion()
 
 @enduml
