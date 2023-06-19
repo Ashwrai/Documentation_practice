@@ -7,11 +7,11 @@ Actualizar a tiempo real la ubicación del pedido
 @startuml Ver estado pedido
 actor "Cliente/Propietario"
 boundary "Interfaz Pedido"
-boundary "Interfaz Ruta"
+boundary "Interfaz Transportista"
 control "Gestor Pedidos"
 
 par transportista
-    ref over "Proporcionar Localización": Actualizar_GPS()
+    ref over "Interfaz Transportista": Actualizar_GPS()
     else cliente
     "Cliente/Propietario"->"Interfaz Pedido": Ver_Estado_Pedido()
     loop Error==false && Finalizado==false
