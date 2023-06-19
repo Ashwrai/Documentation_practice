@@ -6,23 +6,24 @@ Actualizar a tiempo real la ubicación del pedido
 '/
 @startuml Ver estado pedido
 actor "Cliente/Propietario"
-boundary "Interfaz Estado Pedido"
+boundary "Interfaz Pedido"
+boundary "Interfaz Ruta"
 control "Gestor Pedidos"
 
-par
+par transportista
     loop Entregando!=null
-        "Aplicación Transportista" -> "Gestor Pedidos": Actualizar_Posición_GPS()
-        "Aplicación Transportista" -> "Aplicación Transportista": Esperar_Un_Segundo()
+        "Interfaz Ruta" -> "Gestor Pedidos": Actualizar_Posición_GPS()
+        "Interfaz Ruta" -> "Interfaz Ruta": Esperar_Un_Segundo()
     end
-    else
-    "Cliente/Propietario"->"Interfaz Estado Pedido": Ver_Estado_Pedido()
+    else cliente
+    "Cliente/Propietario"->"Interfaz Pedido": Ver_Estado_Pedido()
     loop Error==false && Finalizado==false
-        "Interfaz Estado Pedido" -> "Gestor Pedidos": Solicitar_Estado_Actual()
+        "Interfaz Pedido" -> "Gestor Pedidos": Solicitar_Estado_Actual()
         alt Solicitud Válida
-            "Gestor Pedidos" --> "Interfaz Estado Pedido": Actualizar_Estado_Pedido()
-            "Interfaz Estado Pedido" -> "Interfaz Estado Pedido": Esperar_Un_Segundo()
+            "Gestor Pedidos" --> "Interfaz Pedido": Actualizar_Estado_Pedido()
+            "Interfaz Pedido" -> "Interfaz Pedido": Esperar_Un_Segundo()
         else Solicitud Invalida
-            "Gestor Pedidos" --> "Interfaz Estado Pedido": Mostrar_Error()
+            "Gestor Pedidos" --> "Interfaz Pedido": Mostrar_Error()
         end
     end
 end
