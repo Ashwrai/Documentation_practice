@@ -1,0 +1,29 @@
+@startuml
+actor "Usuario"
+boundary "Interfaz Usuario"
+control "Gestor Usuario"
+entity "Servicio de autentificación"
+
+"Usuario" -> "Interfaz Usuario": Seleccionar_login()
+loop sesión inválida
+    "Usuario" -> "Interfaz Usuario": Introducir_detalles()
+    "Interfaz Usuario" -> "Gestor Usuario": Iniciar_sesión()
+    "Gestor Usuario" -> "Servicio de autentificación": Validar_Sesión()
+    ref over "Servicio de autentificación": CU Validar_sesión
+
+    alt Sessión válida
+        "Servicio de autentificación" --> "Gestor Usuario": <<return>> Sesión válida 
+        "Gestor Usuario" --> "Interfaz Usuario": Mostrar_Interfaz(tipo_usuario)
+        else Sessión inválida
+        "Servicio de autentificación" --> "Gestor Usuario": <<return>> Sesión inválida 
+        "Gestor Usuario" --> "Interfaz Usuario": Mostrar_fallo_login()
+    end
+end
+
+group Do Something
+end
+
+"Usuario" -> "Interfaz Usuario": Cerrar_sesión()
+"Interfaz Usuario" -> "Gestor Usuario": Cerrar_sesión()
+"Gestor Usuario" --> "Interfaz Usuario": <<return>>
+@enduml

@@ -1,0 +1,10 @@
+@startuml
+control "Gestor Transportista"
+entity DatosTransportista
+entity Pedido
+
+"Gestor Transportista" -> DatosTransportista: RegistrarKms(pedido)
+DatosTransportista -> Pedido: ObtenerDatos(pedido)
+Pedido --> DatosTransportista: <<return>>
+DatosTransportista --> "Gestor Transportista": <<return>>
+@enduml

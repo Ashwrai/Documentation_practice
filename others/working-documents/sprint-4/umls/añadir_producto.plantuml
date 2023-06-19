@@ -1,0 +1,12 @@
+@startuml
+actor "Propietario de Tienda"
+boundary "Interfaz Propietario de Tienda"
+control "Gestor Propietario de Tienda"
+entity Producto
+
+"Propietario de Tienda" -> "Interfaz Propietario de Tienda": Añadir_Producto(Data_Producto)
+"Interfaz Propietario de Tienda" -> "Gestor Propietario de Tienda": Añadir_Producto(Data_Producto)
+"Gestor Propietario de Tienda" -> Producto: Añadir_Producto(Data_Producto)
+Producto --> "Gestor Propietario de Tienda": <<return>>
+"Gestor Propietario de Tienda"--> "Interfaz Propietario de Tienda": <<return>>
+@enduml

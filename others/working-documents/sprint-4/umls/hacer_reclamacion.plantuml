@@ -1,16 +1,16 @@
-@startuml Hacer Reclamación
+@startuml
 actor Cliente
 boundary "Interfaz Cliente"
 actor "Atención al cliente"
-boundary "Interfaz Atención al cliente"
+boundary "Interfaz Reclamación"
 control "Gestor Reclamaciones"
 actor "Compañía de seguros"
 
 Cliente -> "Interfaz Cliente": ComunicarReclamación(detalles)
-"Interfaz Cliente" -> "Interfaz Atención al cliente": R=NotificarReclamación(detalles)
-"Interfaz Atención al cliente" -> "Atención al cliente": ComunicarReclamación(R)
-"Atención al cliente" -> "Interfaz Atención al cliente": RegistrarReclamación(R)
-"Interfaz Atención al cliente" -> "Gestor Reclamaciones": RegistrarReclamación(R)
+"Interfaz Cliente" -> "Interfaz Reclamación": R=NotificarReclamación(detalles)
+"Interfaz Reclamación" -> "Atención al cliente": ComunicarReclamación(R)
+"Atención al cliente" -> "Interfaz Reclamación": RegistrarReclamación(R)
+"Interfaz Reclamación" -> "Gestor Reclamaciones": RegistrarReclamación(R)
 "Gestor Reclamaciones" -> "Compañía de seguros": ValidarReclamación(R)
 
 "Compañía de seguros" --> "Gestor Reclamaciones": ResultadoValidación
@@ -40,5 +40,4 @@ alt Reclamación válida
         "Compañía de seguros" --> "Gestor Reclamaciones": EnviarExplicaciónInvalida()
         "Gestor Reclamaciones" --> "Interfaz Cliente": MostrarExplicaciónInvalida(explicación)
     end
-
 @enduml

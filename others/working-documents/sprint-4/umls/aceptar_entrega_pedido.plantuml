@@ -1,0 +1,31 @@
+@startuml
+actor "Transportisa"
+boundary "Interfaz Transportista"
+control "Gestor Transportista"
+entity Pedido
+entity DatosTransportista
+
+"Transportisa" -> "Interfaz Transportista": Obtener_lista_pedidos()
+"Interfaz Transportista" -> "Gestor Transportista": Obtener_pedidos()
+
+loop pedidos_cerca
+"Gestor Transportista" -> Pedido: Obtener_pedidos()
+Pedido --> "Gestor Transportista": <<return>>
+end
+
+"Gestor Transportista" --> "Interfaz Transportista": <<return>> Mostrar_pedidos()
+"Transportisa" -> "Interfaz Transportista": Aceptar_pedido(y)
+"Interfaz Transportista" -> "Gestor Transportista": Aceptar_pedido(y)
+"Gestor Transportista" -> Pedido: Actualizar_pedido(y)
+
+Pedido --> "Gestor Transportista": <<return>>
+"Gestor Transportista" --> "Interfaz Transportista": <<return>>
+
+"Transportisa" -> "Interfaz Transportista": Terminar_pedido(y)
+"Interfaz Transportista" -> "Gestor Transportista": Terminar_pedido(y)
+"Gestor Transportista" -> Pedido: Terminar_pedido(y)
+"Gestor Transportista" -> DatosTransportista: RegistrarKms(y)
+ref over DatosTransportista: CU Registrar kms del trayecto
+DatosTransportista --> "Gestor Transportista": <<return>>
+"Gestor Transportista" --> "Interfaz Transportista": <<return>>
+@enduml

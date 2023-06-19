@@ -3,19 +3,19 @@
 actor Usuario
 boundary "Interfaz Usuario"
 control "Gestor Usuario"
-database "Base de Datos de la Cuenta"
+entity "Datos Usuario"
 
 Usuario -> "Interfaz Usuario": VerDetallesCuenta()
 "Interfaz Usuario" -> "Gestor Usuario": ObtenerDetallesCuenta()
-"Gestor Usuario" -> "Base de Datos de la Cuenta": ConsultarDetallesCuenta()
-"Base de Datos de la Cuenta" --> "Gestor Usuario": DetallesCuenta
+"Gestor Usuario" -> "Datos Usuario": ConsultarDetallesCuenta()
+"Datos Usuario" --> "Gestor Usuario": DetallesCuenta
 "Gestor Usuario" -> "Interfaz Usuario": MostrarDetallesCuenta(DetallesCuenta)
 Usuario -> "Interfaz Usuario": SeleccionarOpcionModificarDetalles()
 "Interfaz Usuario" -> "Gestor Usuario": ObtenerDetallesModificar()
 "Gestor Usuario" -> "Interfaz Usuario": MostrarDetallesModificar(DetallesModificar)
 Usuario -> "Interfaz Usuario": SeleccionarDetallesModificar(DetallesModificar)
 "Interfaz Usuario" -> "Gestor Usuario": ConfirmarModificacionDetalles(DetallesModificar)
-"Gestor Usuario" -> "Base de Datos de la Cuenta": ModificarDetalles(DetallesModificar)
+"Gestor Usuario" -> "Datos Usuario": ModificarDetalles(DetallesModificar)
 "Gestor Usuario" -> "Interfaz Usuario": ConfirmarModificacion()
 
 @enduml
