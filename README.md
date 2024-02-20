@@ -1,33 +1,34 @@
-# ES23UAB-431-08
-## Integrantes
-|Integrantes| Email | NIU | Username | Rol |
+# Documentation for ENCASA
+## Participants
+|Participants| Email | NIU | Username | Role |
 |--|--|--|--|--|
 | Huang, Daniel | daniel.huang@autonoma.cat | 1636837 | Ashwrai | Scrum Master
 | Hammouch Benabdellah, Sara | sara.hammouch@autonoma.cat | 1638922 | hsara03 | Scrum Member |
 | Osuna Garcia, Enrique | enrique.osuna@autonoma.cat | 1636461 | quiquelhappy | Scrum Member |
 
-## Enlaces
+## Links
 -  [GitHub](https://github.com/Ashwrai/ES23UAB-431-08)
 
-## Descripción del proyecto
-Estamos desarollando una aplicación que es capaz de recibir pedidos de negocios locales, a diferencia de los servicios alternativos que no se focalizan en el comercio local, además de fomentar la actividad de transportistas por cuenta ajena cercanos a los negocios, y ofrecer una experiencia de usuario fácil y rápida a los clientes. El objetivo es ofrecer un servicio justo con un modelo empresarial sostenible: **__ENCASA__**
+## Project description
+The app to develop is about receiving order from **local** stores, the difference with alternative services is centered around proximity,  
+Estamos desarollando una aplicación que es capaz de recibir pedidos de negocios locales, a diferencia de los servicios alternativos que no se focalizan en el comercio local, in addition to promoting the activity of third-party carriers near businesses and providing customers with an easy and fast user experience. The goal is to offer fair service with a sustainable business model: **__ENCASA__**
 
-## Contenidos
-- **Documentos**: documentos PDF resultantes
-- **Minutes**: reuniones
-- **Others**: otros archivos, como el script generador de PDFs automático
-- **Requirements**: lista de requisitos del cliente
+## Content
+- **Documents**: By-products of the documentation process
+- **Minutes**: meetings
+- **Others**: other files, such as automatic script generator of PDFs
+- **Requirements**: list of documented requirements
 ---------------
 # Sprints
-## Sprint #1: Definición de requisitos
-### Explicación de la entrega
-En este sprint nos hemos comunicado con el cliente y hemos recopilado la lista de requisitos (historias de usuario), de tipos de usuarios, y documento de especificaciones.
+## Sprint #1: Definition of requirements
+### Delivery Explanation
+During this sprint, we have communicated with the client and gathered the list of requirements (user stories), user types, and specification document.
 
-## Materiales resultantes
-- Lista completa de requisitos (historias de cliente) en formato Markdown
-- Documento especificaciones
-- Script generador de PDF, lo cual resulta en
-	- PDF de requisitos
-	- PDF de especificaciones+requisitos
-- Tareas en la plataforma de Azure DevOps
-- Historial de commits
+## Resulting Materials
+- Complete list of requirements (client stories) in Markdown format
+- Specification document
+- PDF generator script, resulting in
+	- Requirements PDF
+	- Specifications + Requirements PDF
+- Tasks in Azure DevOps platform
+- Commit history
